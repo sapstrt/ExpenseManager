@@ -1,5 +1,7 @@
 package com.expenses.domain;
 
+import javax.persistence.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: vinay.varma
@@ -7,10 +9,23 @@ package com.expenses.domain;
  * Time: 7:51 PM
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@Table(name = "EXPENSE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("U")
 public class Expense {
+
+    @Id
     private int id;
+
     private Double amount;
+
+    @Embedded
     private ExpenseDetails description;
+
+    @ManyToOne
+    @JoinColumn(name = "expense_owner")
     private User expenseOwner;
 
     public Expense(int id, Double amount, ExpenseDetails description, User expenseOwner) {
@@ -50,5 +65,25 @@ public class Expense {
 
     public void setExpenseOwner(User expenseOwner) {
         this.expenseOwner = expenseOwner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Expense expense = (Expense) o;
+
+        if (id != expense.id) return false;
+        if (!expenseOwner.equals(expense.expenseOwner)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + expenseOwner.hashCode();
+        return result;
     }
 }
