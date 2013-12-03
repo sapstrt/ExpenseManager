@@ -3,9 +3,7 @@ package com.expenses.domain;
 import com.expenses.exception.GroupExpenseException;
 import com.expenses.helper.Helper;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +20,9 @@ import java.util.Map;
 @DiscriminatorValue("G")
 public class GroupExpense extends Expense {
     private Group group;
+    @ManyToMany
+    @JoinTable(name = "DISTRIBUTED_EXPENSE",joinColumns = {@JoinColumn(name = "EXPENSE_INFO")},inverseJoinColumns = {@JoinColumn(name = "GROUP")})
+    @MapKey(name = "USER")
     private Map<User, Expense> distributedExpense;
 
     public GroupExpense(int id, Double amount, ExpenseDetails description, User expenseOwner, Group group) {
