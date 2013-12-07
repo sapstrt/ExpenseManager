@@ -1,14 +1,17 @@
+/*
 package com.expenses.domain;
 
 import javax.persistence.*;
 
+*/
 /**
  * Created with IntelliJ IDEA.
  * User: vinay.varma
  * Date: 11/24/13
  * Time: 7:51 PM
  * To change this template use File | Settings | File Templates.
- */
+ *//*
+
 @Entity
 @Table(name = "EXPENSE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -24,15 +27,17 @@ public class Expense {
     @Embedded
     private ExpenseDetails description;
 
-    @ManyToOne
+    */
+/*@ManyToOne
     @JoinColumn(name = "expense_owner")
     private User expenseOwner;
+*//*
 
     public Expense(int id, Double amount, ExpenseDetails description, User expenseOwner) {
         this.id = id;
         this.amount = amount;
         this.description = description;
-        this.expenseOwner = expenseOwner;
+      //  this.expenseOwner = expenseOwner;
     }
 
     public int getId() {
@@ -59,13 +64,15 @@ public class Expense {
         this.description = description;
     }
 
-    public User getExpenseOwner() {
+    */
+/*public User getExpenseOwner() {
         return expenseOwner;
     }
 
     public void setExpenseOwner(User expenseOwner) {
         this.expenseOwner = expenseOwner;
-    }
+    }*//*
+
 
     @Override
     public boolean equals(Object o) {
@@ -75,7 +82,7 @@ public class Expense {
         Expense expense = (Expense) o;
 
         if (id != expense.id) return false;
-        if (!expenseOwner.equals(expense.expenseOwner)) return false;
+       // if (!expenseOwner.equals(expense.expenseOwner)) return false;
 
         return true;
     }
@@ -83,7 +90,8 @@ public class Expense {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + expenseOwner.hashCode();
+        //result = 31 * result + expenseOwner.hashCode();
         return result;
     }
 }
+*/

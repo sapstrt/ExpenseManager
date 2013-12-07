@@ -24,18 +24,23 @@ public class User {
 
     private boolean isActive;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(name="MEMBER",joinColumns = {@JoinColumn(name = "USER_ID")},inverseJoinColumns = {@JoinColumn(name = "GROUP_ID")})
     private List<Group> memberOfGroup;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "expenseOwner")
+    /*@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "expenseOwner")
     private List<Expense> expenses;
+*/
+
+    public User() {
+        memberOfGroup=new ArrayList<Group>();
+    }
 
     public User(int id, String userName, String email) {
         this.id = id;
         this.userName = userName;
         this.email = email;
-        expenses = new ArrayList<Expense>();
+      //  expenses = new ArrayList<Expense>();
         memberOfGroup = new ArrayList<Group>();
         isActive=false;
     }
@@ -44,10 +49,10 @@ public class User {
     public void addGroup(Group group) {
         memberOfGroup.add(group);
     }
-
+/*
     public void addExpense(Expense expense) {
         expenses.add(expense);
-    }
+    }*/
 
     public void setActive(boolean active){
         isActive=active;
@@ -84,5 +89,37 @@ public class User {
         int result = id;
         result = 31 * result + email.hashCode();
         return result;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public List<Group> getMemberOfGroup() {
+        return memberOfGroup;
+    }
+
+    public void setMemberOfGroup(List<Group> memberOfGroup) {
+        this.memberOfGroup = memberOfGroup;
     }
 }

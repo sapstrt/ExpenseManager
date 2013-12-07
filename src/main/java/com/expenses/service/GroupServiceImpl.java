@@ -63,7 +63,7 @@ public class GroupServiceImpl implements GroupService {
             throw new GroupNotFoundException(groupId);
         if (!checkPreconditionsToActivateMembership(member))
             throw new UserActivationException(memberEmailId,group.getGroupName());
-        group.activateMember(member);
+        //group.activateMember(member);
         //todo : groupDao
 
 

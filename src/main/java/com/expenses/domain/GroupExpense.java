@@ -1,3 +1,4 @@
+/*
 package com.expenses.domain;
 
 import com.expenses.exception.GroupExpenseException;
@@ -8,13 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
  * Created with IntelliJ IDEA.
  * User: vinay.varma
  * Date: 11/24/13
  * Time: 7:52 PM
  * To change this template use File | Settings | File Templates.
- */
+ *//*
+
 @Entity
 @Table(name = "EXPENSE")
 @DiscriminatorValue("G")
@@ -66,3 +69,4 @@ public class GroupExpense extends Expense {
         this.distributedExpense = distributedExpense;
     }
 }
+*/

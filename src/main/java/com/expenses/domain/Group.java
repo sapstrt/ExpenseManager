@@ -2,9 +2,7 @@ package com.expenses.domain;
 
 import com.expenses.exception.UserException;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,13 +16,15 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name = "GROUP")
+@Table(name = "GROUPS_MEM")
 public class Group {
     @Id
     private int id;
     private String groupName;
+    @ManyToMany(mappedBy = "memberOfGroup",targetEntity = com.expenses.domain.User.class,cascade = CascadeType.ALL)
+
     private Map<User, MemberProps> memberMap;
-    private List<GroupExpense> groupExpenses;
+   // private List<GroupExpense> groupExpenses;
 
     public String getGroupName() {
         return groupName;
@@ -35,23 +35,9 @@ public class Group {
         members = new ArrayList<User>(memberMap.keySet());
         return members;
     }
-    public enum MemberProps{
-        ADMIN(true,true),ACTIVE(true,false),PASSIVE(false,false);
-        private final boolean isActive;
-        private final boolean isAdmin;
 
-        MemberProps(boolean isActive, boolean isAdmin) {
-            this.isActive=isActive;
-            this.isAdmin=isAdmin;
-        }
-
-        public boolean isActive() {
-            return isActive;
-        }
-
-        public boolean isAdmin() {
-            return isAdmin;
-        }
+    public Group() {
+        memberMap=new HashMap<User, MemberProps>();
     }
 
     public Group(int id, String groupName, User owner) {
@@ -60,7 +46,7 @@ public class Group {
         memberMap = new HashMap<User, MemberProps>();
         memberMap.put(owner, MemberProps.ADMIN);
         owner.addGroup(this);
-        groupExpenses = new ArrayList<GroupExpense>();
+     //   groupExpenses = new ArrayList<GroupExpense>();
     }
 
     public void addMember(User member) {
@@ -71,14 +57,14 @@ public class Group {
         MemberProps memberProperty;
         if ((memberProperty = memberMap.get(member)) == null)
             throw new UserException(member + " not a member of " + this);
-        return memberProperty.isAdmin;
+        return memberProperty.isAdmin();
     }
 
     public boolean isActive(User member) throws UserException {
         MemberProps memberProperty;
         if ((memberProperty = memberMap.get(member)) == null)
             throw new UserException(member + " not a member of " + this);
-        return memberProperty.isActive;
+        return memberProperty.isActive();
     }
 
     public void activateMember(User member) throws UserException {
@@ -88,10 +74,10 @@ public class Group {
 
     }
 
-    public void addExpense(GroupExpense groupExpense) {
+  /*  public void addExpense(GroupExpense groupExpense) {
         groupExpenses.add(groupExpense);
     }
-
+*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,5 +96,25 @@ public class Group {
         int result = id;
         result = 31 * result + groupName.hashCode();
         return result;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public Map<User, MemberProps> getMemberMap() {
+        return memberMap;
+    }
+
+    public void setMemberMap(Map<User, MemberProps> memberMap) {
+        this.memberMap = memberMap;
     }
 }
