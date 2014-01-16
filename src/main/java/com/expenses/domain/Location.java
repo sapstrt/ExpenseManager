@@ -1,6 +1,5 @@
 package com.expenses.domain;
 
-import javax.persistence.Embeddable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +8,5 @@ import javax.persistence.Embeddable;
  * Time: 7:57 PM
  * To change this template use File | Settings | File Templates.
  */
-@Embeddable
 public class Location {
 }

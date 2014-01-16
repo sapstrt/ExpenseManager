@@ -1,7 +1,5 @@
 package com.expenses.domain;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 import java.util.Date;
 
 /**
@@ -11,9 +9,7 @@ import java.util.Date;
  * Time: 7:58 PM
  * To change this template use File | Settings | File Templates.
  */
-@Embeddable
 public class ExpenseDetails {
-    @Embedded
     private Location location;
     private String description;
     private Date timestamp;
