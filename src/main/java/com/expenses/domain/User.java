@@ -1,6 +1,6 @@
 package com.expenses.domain;
 
-import javax.jdo.annotations.PersistenceCapable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +11,11 @@ import java.util.List;
  * Time: 7:50 PM
  * To change this template use File | Settings | File Templates.
  */
-@PersistenceCapable
+@Entity
+@Table(name = "USER")
 public class User {
 
+    @Id
     private int id;
 
     private String userName;
@@ -22,6 +24,8 @@ public class User {
 
     private boolean isActive;
 
+    @ManyToMany
+    @JoinTable(name="MEMBER",joinColumns = {@JoinColumn(name = "USER_ID")},inverseJoinColumns = {@JoinColumn(name = "GROUP_ID")})
     private List<Group> memberOfGroup;
 
     /*@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "expenseOwner")

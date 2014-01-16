@@ -2,7 +2,7 @@ package com.expenses.domain;
 
 import com.expenses.exception.UserException;
 
-import javax.jdo.annotations.PersistenceCapable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,10 +15,13 @@ import java.util.Map;
  * Time: 7:51 PM
  * To change this template use File | Settings | File Templates.
  */
-@PersistenceCapable
+@Entity
+@Table(name = "GROUPS_MEM")
 public class Group {
+    @Id
     private int id;
     private String groupName;
+    @ManyToMany(mappedBy = "memberOfGroup",targetEntity = com.expenses.domain.User.class,cascade = CascadeType.ALL)
 
     private Map<User, MemberProps> memberMap;
    // private List<GroupExpense> groupExpenses;

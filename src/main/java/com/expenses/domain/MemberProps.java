@@ -1,5 +1,6 @@
 package com.expenses.domain;
 
+import javax.persistence.Embeddable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -8,6 +9,7 @@ package com.expenses.domain;
  * Time: 12:28 AM
  * To change this template use File | Settings | File Templates.
  */
+@Embeddable
 public enum MemberProps{
     ADMIN(true,true),ACTIVE(true,false),PASSIVE(false,false);
     private final boolean isActive;
