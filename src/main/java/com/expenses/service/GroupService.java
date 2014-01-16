@@ -1,7 +1,6 @@
 package com.expenses.service;
 
 import com.expenses.domain.Group;
-import com.expenses.domain.User;
 import com.expenses.exception.GroupCreationException;
 import com.expenses.exception.GroupNotFoundException;
 import com.expenses.exception.UserActivationException;

@@ -16,6 +16,7 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String userName;
@@ -24,8 +25,7 @@ public class User {
 
     private boolean isActive;
 
-    @ManyToMany
-    @JoinTable(name="MEMBER",joinColumns = {@JoinColumn(name = "USER_ID")},inverseJoinColumns = {@JoinColumn(name = "GROUP_ID")})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Group> memberOfGroup;
 
     /*@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "expenseOwner")
@@ -36,8 +36,7 @@ public class User {
         memberOfGroup=new ArrayList<Group>();
     }
 
-    public User(int id, String userName, String email) {
-        this.id = id;
+    public User( String userName, String email) {
         this.userName = userName;
         this.email = email;
       //  expenses = new ArrayList<Expense>();

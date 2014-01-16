@@ -26,16 +26,16 @@ public class UserDaoTest {
     GroupDao groupDao;
     @Test
     public void testCreateUSer(){
-        User user=new User(2,"test","trest@test.com");
-        new Group(1,"abc",user);
+        User user=new User("test","trest@test.com");
+        new Group("abc",user);
         System.out.print(user);
         dao.save(user);
 
     }
     @Test
     public void testCreateGroup(){
-        User user=new User(2,"test","trest@test.com");
-        Group group=new Group(1,"abc",user);
+        User user=new User("test","trest@test.com");
+        Group group=new Group("abc",user);
         System.out.print(user);
         groupDao.save(group);
 

@@ -6,7 +6,6 @@ import com.expenses.exception.GroupCreationException;
 import com.expenses.exception.GroupNotFoundException;
 import com.expenses.exception.UserActivationException;
 import com.expenses.exception.UserDoesNotExistException;
-import com.expenses.helper.Helper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,7 +24,7 @@ public class GroupServiceImpl implements GroupService {
         }
         if (validateGroupCredentials(user,groupName)){
             //todo : validate for group id
-            Group group=new Group(Helper.generateId(),groupName,user);
+            Group group=new Group(groupName,user);
             //todo : groupDao
             return group;
         }

@@ -19,10 +19,18 @@ import java.util.Map;
 @Table(name = "GROUPS_MEM")
 public class Group {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String groupName;
-    @ManyToMany(mappedBy = "memberOfGroup",targetEntity = com.expenses.domain.User.class,cascade = CascadeType.ALL)
 
+    @ElementCollection(targetClass = MemberProps.class)
+    @MapKeyClass(Group.class)
+    @JoinTable(
+            name = "MEMBER_PROPS",
+            joinColumns = @JoinColumn(name = "member")
+    )
+    @Column(name = "group")
+    @Enumerated(EnumType.STRING)
     private Map<User, MemberProps> memberMap;
    // private List<GroupExpense> groupExpenses;
 
@@ -40,8 +48,7 @@ public class Group {
         memberMap=new HashMap<User, MemberProps>();
     }
 
-    public Group(int id, String groupName, User owner) {
-        this.id = id;
+    public Group( String groupName, User owner) {
         this.groupName = groupName;
         memberMap = new HashMap<User, MemberProps>();
         memberMap.put(owner, MemberProps.ADMIN);

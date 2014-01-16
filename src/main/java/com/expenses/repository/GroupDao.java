@@ -2,6 +2,7 @@ package com.expenses.repository;
 
 import com.expenses.domain.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,5 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Time: 11:34 PM
  * To change this template use File | Settings | File Templates.
  */
+
 public interface GroupDao extends JpaRepository<Group,Integer>{
 }

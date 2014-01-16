@@ -1,7 +1,6 @@
 package com.expenses.service;
 
 import com.expenses.domain.User;
-import com.expenses.helper.Helper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +15,7 @@ public class UserServiceImpl implements UserService {
     public User createNewUser(String userName, String emailId) {
         if (validateNewUserCredentials(userName,emailId)){
             //todo: check if user id exists
-            User user=new User(Helper.generateId(),userName,emailId);
+            User user=new User(userName,emailId);
             //todo : userDao
             return user;
         }

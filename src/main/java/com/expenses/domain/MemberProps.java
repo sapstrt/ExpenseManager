@@ -10,10 +10,17 @@ import javax.persistence.Embeddable;
  * To change this template use File | Settings | File Templates.
  */
 @Embeddable
-public enum MemberProps{
-    ADMIN(true,true),ACTIVE(true,false),PASSIVE(false,false);
-    private final boolean isActive;
-    private final boolean isAdmin;
+public class MemberProps{
+    public static MemberProps ADMIN=new MemberProps(true,true);
+    public static MemberProps ACTIVE=new MemberProps(true,false);
+    public static MemberProps PASSIVE=new MemberProps(false,false);
+
+    private boolean isActive;
+    private boolean isAdmin;
+
+    MemberProps() {
+
+    }
 
     MemberProps(boolean isActive, boolean isAdmin) {
         this.isActive=isActive;
@@ -26,5 +33,13 @@ public enum MemberProps{
 
     public boolean isAdmin() {
         return isAdmin;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
