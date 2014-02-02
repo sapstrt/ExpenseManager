@@ -9,7 +9,7 @@ package com.expenses.exception;
  */
 public class GroupNotFoundException extends Throwable {
     String message;
-    public GroupNotFoundException(int groupId) {
+    public GroupNotFoundException(String groupId) {
         message="group not found for id "+groupId;
     }
 

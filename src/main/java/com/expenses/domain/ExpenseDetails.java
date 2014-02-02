@@ -18,6 +18,10 @@ public class ExpenseDetails {
     private String description;
     private Date timestamp;
 
+    public ExpenseDetails() {
+        timestamp=new Date();
+    }
+
     public Location getLocation() {
         return location;
     }

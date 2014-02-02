@@ -1,4 +1,3 @@
-/*
 package com.expenses.domain;
 
 import com.expenses.exception.GroupExpenseException;
@@ -9,41 +8,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-*/
 /**
  * Created with IntelliJ IDEA.
  * User: vinay.varma
  * Date: 11/24/13
  * Time: 7:52 PM
- * To change this template use File | Settings | File Templates.
- *//*
+ * To change this template use File | Settings | File Templates.*/
+
 
 @Entity
 @Table(name = "EXPENSE")
 @DiscriminatorValue("G")
 public class GroupExpense extends Expense {
+    @ManyToOne
     private Group group;
-    @ManyToMany
-    @JoinTable(name = "DISTRIBUTED_EXPENSE",joinColumns = {@JoinColumn(name = "EXPENSE_INFO")},inverseJoinColumns = {@JoinColumn(name = "GROUP")})
-    @MapKey(name = "USER")
+    @ElementCollection(targetClass = Expense.class)
+    @MapKeyClass(User.class)
+    @JoinTable(
+            name = "GROUP_EXPENSE_DIST",
+            joinColumns = @JoinColumn(name = "expense")
+    )
+    @Column(name = "member")
     private Map<User, Expense> distributedExpense;
 
-    public GroupExpense(int id, Double amount, ExpenseDetails description, User expenseOwner, Group group) {
-        super(id, amount, description, expenseOwner);
+    public GroupExpense() {
+    }
+
+    public GroupExpense( Double amount, ExpenseDetails description, User expenseOwner, Group group) throws GroupExpenseException {
+        super( amount, description, expenseOwner);
         this.group = group;
         List<User> members;
         int groupSize;
-        distributedExpense = new HashMap<User, Expense>((groupSize = (members = group.getMembers()).size()));
+        Map<User,Expense> distributedExpenses = new HashMap<User, Expense>((groupSize = (members = group.getMembers()).size()));
         for (User member : members) {
             Expense expense;
             if (member.equals(expenseOwner)){
-                member.addExpense(expense=new Expense(Helper.generateId(),amount / groupSize-amount, description, expenseOwner));
+                member.addExpense(new Expense(amount,description,expenseOwner));
+                member.addExpense(expense=new Expense(amount / groupSize-amount, description, expenseOwner));
             }else {
-                member.addExpense((expense = new Expense(Helper.generateId(), amount / groupSize, description, expenseOwner)));
+                member.addExpense((expense = new Expense(amount / groupSize, description, expenseOwner)));
             }
-            distributedExpense.put(member, expense);
+            distributedExpenses.put(member, expense);
         }
-
+        setDistributedExpense(distributedExpenses);
     }
 
     public Group getGroup() {
@@ -63,10 +70,15 @@ public class GroupExpense extends Expense {
         for (Expense expense:distributedExpense.values() ){
             totalExpense+=expense.getAmount();
         }
-        if (totalExpense!=getAmount()){
+        if (totalExpense!=0.0){
             throw new GroupExpenseException("Sum of individual expenses do not tally");
         }
         this.distributedExpense = distributedExpense;
     }
+
+    @Override
+    public String toString() {
+        return "GroupExpense{" +
+                '}';
+    }
 }
-*/

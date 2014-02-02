@@ -4,6 +4,8 @@ import com.expenses.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: vinay.varma
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 
 public interface UserDao extends JpaRepository<User,Integer>{
+    public List<User> findByUserName(String userName);
+    public User findByEmail(String email);
+
 }

@@ -14,5 +14,7 @@ public interface UserService {
 
     User retrieveUser(String emailId);
 
+    boolean activateUser(User user);
+
 
 }

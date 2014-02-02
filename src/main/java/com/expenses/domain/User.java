@@ -1,5 +1,10 @@
 package com.expenses.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "USER")
+@Component
 public class User {
 
     @Id
@@ -25,12 +31,21 @@ public class User {
 
     private boolean isActive;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Group> memberOfGroup;
 
-    /*@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "expenseOwner")
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},mappedBy = "expenseOwner")
     private List<Expense> expenses;
-*/
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
 
     public User() {
         memberOfGroup=new ArrayList<Group>();
@@ -39,7 +54,7 @@ public class User {
     public User( String userName, String email) {
         this.userName = userName;
         this.email = email;
-      //  expenses = new ArrayList<Expense>();
+        expenses = new ArrayList<Expense>();
         memberOfGroup = new ArrayList<Group>();
         isActive=false;
     }
@@ -48,10 +63,9 @@ public class User {
     public void addGroup(Group group) {
         memberOfGroup.add(group);
     }
-/*
     public void addExpense(Expense expense) {
         expenses.add(expense);
-    }*/
+    }
 
     public void setActive(boolean active){
         isActive=active;
@@ -120,5 +134,15 @@ public class User {
 
     public void setMemberOfGroup(List<Group> memberOfGroup) {
         this.memberOfGroup = memberOfGroup;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 }

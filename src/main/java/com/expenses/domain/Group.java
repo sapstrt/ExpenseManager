@@ -32,7 +32,9 @@ public class Group {
     @Column(name = "group")
     @Enumerated(EnumType.STRING)
     private Map<User, MemberProps> memberMap;
-   // private List<GroupExpense> groupExpenses;
+
+    @OneToMany
+    private List<GroupExpense> groupExpenses;
 
     public String getGroupName() {
         return groupName;
@@ -53,7 +55,7 @@ public class Group {
         memberMap = new HashMap<User, MemberProps>();
         memberMap.put(owner, MemberProps.ADMIN);
         owner.addGroup(this);
-     //   groupExpenses = new ArrayList<GroupExpense>();
+        groupExpenses = new ArrayList<GroupExpense>();
     }
 
     public void addMember(User member) {
@@ -81,10 +83,9 @@ public class Group {
 
     }
 
-  /*  public void addExpense(GroupExpense groupExpense) {
+    public void addExpense(GroupExpense groupExpense) {
         groupExpenses.add(groupExpense);
     }
-*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,5 +124,14 @@ public class Group {
 
     public void setMemberMap(Map<User, MemberProps> memberMap) {
         this.memberMap = memberMap;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupName='" + groupName + '\'' +
+                ", id=" + id +
+                ", groupExpenses=" + groupExpenses +
+                '}';
     }
 }

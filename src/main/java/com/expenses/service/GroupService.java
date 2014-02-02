@@ -1,10 +1,7 @@
 package com.expenses.service;
 
 import com.expenses.domain.Group;
-import com.expenses.exception.GroupCreationException;
-import com.expenses.exception.GroupNotFoundException;
-import com.expenses.exception.UserActivationException;
-import com.expenses.exception.UserDoesNotExistException;
+import com.expenses.exception.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,8 +15,13 @@ public interface GroupService {
 
     void addMember(int groupId, String memberEmailId) throws UserDoesNotExistException, GroupNotFoundException;
 
-    void activateMembership(int groupId, String memberEmailId) throws UserDoesNotExistException, GroupNotFoundException, UserActivationException;
+    void activateMembership(int groupId, String memberEmailId) throws UserDoesNotExistException, GroupNotFoundException, UserActivationException, UserException;
 
     Group retrieveGroup(int groupId);
 
+    Group retrieveGroup(String email, String groupName) throws UserDoesNotExistException, GroupNotFoundException, UserException;
+
+    Group addMember(String ownerEmail, String groupName, String memberEmail, String memberName) throws UserDoesNotExistException, GroupNotFoundException, UserException;
+
+    boolean activateMembership(String email, String groupName) throws GroupNotFoundException, UserDoesNotExistException, UserException;
 }

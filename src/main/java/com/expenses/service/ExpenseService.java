@@ -1,19 +1,18 @@
-/*
 package com.expenses.service;
 
 import com.expenses.domain.Expense;
 import com.expenses.exception.UserDoesNotExistException;
 
 import java.util.Date;
+import java.util.List;
 
-*/
 /**
  * Created with IntelliJ IDEA.
  * User: vinay.varma
  * Date: 11/25/13
  * Time: 12:52 AM
- * To change this template use File | Settings | File Templates.
- *//*
+ * To change this template use File | Settings | File Templates.*/
+
 
 public interface ExpenseService {
     Expense createNewExpense(String ownerEmailId, Double amount) throws UserDoesNotExistException;
@@ -24,5 +23,6 @@ public interface ExpenseService {
 
     Expense retrieveExpense(int expenseId);
 
+    List<Expense> retrieveAllExpenses(String email);
+
 }
-*/
